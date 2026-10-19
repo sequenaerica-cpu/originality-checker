@@ -33,7 +33,9 @@ def secret(name, default=None):
         return default
 
 
-ONLINE = secret("ONLINE", None) is not None or secret("BRAVE_KEY") is not None or secret("APP_PASSWORD") is not None
+# run.bat only exists on your laptop (it isn't uploaded to GitHub), so if it's missing we're online
+ONLINE = (secret("ONLINE", None) is not None or secret("BRAVE_KEY") is not None
+          or secret("APP_PASSWORD") is not None or not os.path.exists(os.path.join(HERE, "run.bat")))
 
 
 def load_settings():
